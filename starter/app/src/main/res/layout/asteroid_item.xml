@@ -7,11 +7,15 @@
         <variable
             name="asteroid"
             type="com.udacity.asteroidradar.Asteroid" />
+        <variable
+            name="listener"
+            type="com.udacity.asteroidradar.main.AsteroidItemListener" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:onClick="@{() -> listener.onClick(asteroid)}">
 
         <TextView
             android:id="@+id/asteroid_title"
@@ -42,6 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:iconAsteroid="@{asteroid}"
             android:layout_margin="8dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

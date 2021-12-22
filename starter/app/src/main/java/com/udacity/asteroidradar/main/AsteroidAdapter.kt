@@ -2,15 +2,15 @@ package com.udacity.asteroidradar.main
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.databinding.AsteroidItemBinding
-import com.udacity.asteroidradar.getIconAsteroid
 
-class AsteroidAdapter :  ListAdapter<Asteroid, RecyclerView.ViewHolder>(SleepNightDiffCallback()) {
+class AsteroidAdapter(private val listener: AsteroidItemListener) :  ListAdapter<Asteroid, RecyclerView.ViewHolder>(SleepNightDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         Log.i("zakou", "onCreateViewHolder")
@@ -22,7 +22,7 @@ class AsteroidAdapter :  ListAdapter<Asteroid, RecyclerView.ViewHolder>(SleepNig
         when (holder) {
             is ViewHolder -> {
                 val asteroid = getItem(position)
-                holder.bind(asteroid)
+                holder.bind(listener, asteroid)
             }
         }
     }
@@ -30,10 +30,9 @@ class AsteroidAdapter :  ListAdapter<Asteroid, RecyclerView.ViewHolder>(SleepNig
 
     class ViewHolder private constructor(val binding: AsteroidItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Asteroid) {
+        fun bind(listener: AsteroidItemListener, item: Asteroid) {
             binding.asteroid = item
-            binding.asteroidIcon.setImageResource(getIconAsteroid(item))
-            //binding.clickListener = clickListener
+            binding.listener = listener
             binding.executePendingBindings()
         }
 
@@ -55,5 +54,12 @@ class SleepNightDiffCallback : DiffUtil.ItemCallback<Asteroid>() {
     override fun areContentsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
         return oldItem == newItem
 
+    }
+}
+
+class AsteroidItemListener(val onItemClick : (asteroid: Asteroid) -> Unit) {
+    fun onClick(asteroid: Asteroid) {
+        Log.i("click", "asteroid = ${asteroid.id}")
+        onItemClick(asteroid)
     }
 }

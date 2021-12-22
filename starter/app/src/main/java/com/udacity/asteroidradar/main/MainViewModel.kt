@@ -12,6 +12,10 @@ class MainViewModel : ViewModel() {
     val asteroids : LiveData<List<Asteroid>>
         get() = _asteroids
 
+    val _clickOnAsteroid = MutableLiveData<Asteroid>()
+    val clickOnAsteroid : LiveData<Asteroid>
+        get() = _clickOnAsteroid
+
     init {
         //MOCKING API
         val a = Asteroid(
@@ -39,5 +43,13 @@ class MainViewModel : ViewModel() {
         c.add(a)
         c.add(b)
         _asteroids.value = c
+    }
+
+    fun clickOnItemAsteroid(asteroid : Asteroid) {
+        _clickOnAsteroid.value = asteroid
+    }
+
+    fun endClickOnItemAsteroid() {
+        _clickOnAsteroid.value = null
     }
 }
