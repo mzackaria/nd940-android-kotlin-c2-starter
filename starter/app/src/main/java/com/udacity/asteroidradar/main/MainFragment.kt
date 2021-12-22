@@ -1,8 +1,10 @@
 package com.udacity.asteroidradar.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
@@ -17,8 +19,20 @@ class MainFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
+        val adapter = AsteroidAdapter()
+        binding.asteroidRecycler.adapter = adapter
 
         binding.viewModel = viewModel
+
+        viewModel.asteroids.observe(viewLifecycleOwner, Observer{
+            Log.i("zakou", "Observer")
+            it?.let {
+                for  (i in it) {
+                    Log.i("zakou","id = ${i.id}")
+                }
+                adapter.submitList(it)
+            }
+        })
 
         setHasOptionsMenu(true)
 
