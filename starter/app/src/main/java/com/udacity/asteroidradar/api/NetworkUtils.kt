@@ -1,11 +1,15 @@
 package com.udacity.asteroidradar.api
 
+import android.util.Log
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants
+import com.udacity.asteroidradar.Constants.API_KEY
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
     val nearEarthObjectsJson = jsonResult.getJSONObject("near_earth_objects")
@@ -54,4 +58,25 @@ private fun getNextSevenDaysFormattedDates(): ArrayList<String> {
     }
 
     return formattedDateList
+}
+
+suspend fun getAsteroids() : ArrayList<Asteroid> {
+    val calendar = Calendar.getInstance()
+
+    val currentTime = calendar.time
+    calendar.add(Calendar.DAY_OF_YEAR, Constants.DEFAULT_END_DATE_DAYS)
+    val endTime = calendar.time
+
+    val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+    val startDate = dateFormat.format(currentTime)
+    val endDate = dateFormat.format(endTime)
+
+    try {
+        val response: ResponseBody = NasaApi.retrofitService.getAsteroids(startDate, endDate, API_KEY)
+        val jsonObject = JSONObject(response.string())
+        return parseAsteroidsJsonResult(jsonObject)
+    } catch (e: Exception) {
+        throw e
+    }
+
 }

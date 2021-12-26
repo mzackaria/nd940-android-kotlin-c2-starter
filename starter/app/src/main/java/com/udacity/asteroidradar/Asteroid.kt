@@ -1,6 +1,5 @@
 package com.udacity.asteroidradar
 
-import android.graphics.drawable.Drawable
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
