@@ -1,16 +1,31 @@
 package com.udacity.asteroidradar
 
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.udacity.asteroidradar.api.ApiStatus
 
-@BindingAdapter("statusIcon")
-fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
-    if (isHazardous) {
-        imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
-    } else {
-        imageView.setImageResource(R.drawable.ic_status_normal)
-    }
+@BindingAdapter("iconAsteroid")
+fun ImageView.setIconAsteroid(item: Asteroid?){
+    this.setImageResource(
+        if (item?.isPotentiallyHazardous == true) R.drawable.ic_status_potentially_hazardous
+        else R.drawable.ic_status_normal
+    )
+}
+
+@BindingAdapter("showProgressBar")
+fun ProgressBar.showProgressBar(status: ApiStatus?){
+    this.visibility = if (status == ApiStatus.DONE || status == ApiStatus.ERROR) GONE
+    else VISIBLE
+}
+
+@BindingAdapter("showBrokenConnection")
+fun ImageView.showBrokenConnection(status: ApiStatus?){
+    this.visibility = if (status == ApiStatus.ERROR) VISIBLE
+    else GONE
 }
 
 @BindingAdapter("asteroidStatusImage")

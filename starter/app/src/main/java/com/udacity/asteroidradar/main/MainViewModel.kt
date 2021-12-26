@@ -6,10 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.api.ApiStatus
 import com.udacity.asteroidradar.api.getAsteroids
 import kotlinx.coroutines.launch
-
-enum class NasaApiStatus { LOADING, ERROR, DONE }
 
 class MainViewModel : ViewModel() {
 
@@ -21,8 +20,8 @@ class MainViewModel : ViewModel() {
     val clickOnAsteroid : LiveData<Asteroid>
         get() = _clickOnAsteroid
 
-    private val _status = MutableLiveData<NasaApiStatus>()
-    val status: LiveData<NasaApiStatus>
+    private val _status = MutableLiveData<ApiStatus>()
+    val status: LiveData<ApiStatus>
         get() = _status
 
     init {
@@ -65,13 +64,13 @@ class MainViewModel : ViewModel() {
 
     private fun getAsteroidsProperties() {
         viewModelScope.launch {
-            _status.value = NasaApiStatus.LOADING
+            _status.value = ApiStatus.LOADING
             try {
                 _asteroids.value = getAsteroids()
-                _status.value = NasaApiStatus.DONE
+                _status.value = ApiStatus.DONE
             } catch (e: Exception) {
                 e.printStackTrace()
-                _status.value = NasaApiStatus.ERROR
+                _status.value = ApiStatus.ERROR
                 _asteroids.value = ArrayList()
             }
         }

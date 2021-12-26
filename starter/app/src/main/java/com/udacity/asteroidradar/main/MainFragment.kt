@@ -41,6 +41,8 @@ class MainFragment : Fragment(){
             }
         })
 
+        viewModel.status.observe(viewLifecycleOwner, Observer{})
+
         setHasOptionsMenu(true)
 
         return binding.root
