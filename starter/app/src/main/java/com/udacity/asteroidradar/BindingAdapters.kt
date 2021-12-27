@@ -22,7 +22,7 @@ fun ImageView.picasso(url: String?){
         Picasso.with(this.context)
             .load(url)
             .placeholder(R.drawable.placeholder_picture_of_day)
-            .centerCrop()
+            .error(R.drawable.ic_broken_image)
             .into(this)
     }
 }
