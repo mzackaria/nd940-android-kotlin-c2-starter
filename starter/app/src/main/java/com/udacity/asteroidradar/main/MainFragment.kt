@@ -45,6 +45,7 @@ class MainFragment : Fragment(){
 
         setHasOptionsMenu(true)
 
+
         return binding.root
     }
 

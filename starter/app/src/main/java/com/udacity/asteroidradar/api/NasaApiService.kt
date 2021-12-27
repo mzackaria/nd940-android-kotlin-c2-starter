@@ -29,6 +29,9 @@ interface NasaApiService {
         @Query("end_date") endDate: String,
         @Query("api_key") apiKey: String
     ): Deferred<String>
+
+    @GET("planetary/apod")
+    fun getImageOfDay(@Query("api_key") apiKey: String) : Deferred<String>
 }
 
 object NasaApi {

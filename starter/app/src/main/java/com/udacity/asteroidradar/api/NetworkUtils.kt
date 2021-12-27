@@ -79,3 +79,15 @@ suspend fun getAsteroids() : ArrayList<Asteroid> {
     }
 
 }
+
+suspend fun getImageOfDayUrl() : String? {
+    return try {
+        val response: String = NasaApi.retrofitService.getImageOfDay(API_KEY).await()
+        val jsonObject = JSONObject(response)
+        jsonObject.getString("url")
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+
+}

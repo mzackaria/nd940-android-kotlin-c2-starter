@@ -12,6 +12,7 @@ import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
+import com.udacity.asteroidradar.api.getImageOfDayUrl
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -29,14 +30,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val status: LiveData<ApiStatus>
         get() = _status
 
+    private val _urlImageOfDay = MutableLiveData<String>()
+    val urlImageOfDay : LiveData<String>
+        get() = _urlImageOfDay
+
     val isLoadingAndEmpty: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>()
     val isErrorAndEmpty: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>()
 
     init {
         setObserversForMediators()
         viewModelScope.launch {
+            getImageOfDay()
             getAsteroidsProperties()
         }
+    }
+
+    private suspend fun getImageOfDay() {
+        _urlImageOfDay.value = getImageOfDayUrl()
     }
 
     private fun setObserversForMediators() {

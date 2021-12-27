@@ -6,8 +6,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.udacity.asteroidradar.api.ApiStatus
-import com.udacity.asteroidradar.main.MainViewModel
+import com.squareup.picasso.Picasso
 
 @BindingAdapter("iconAsteroid")
 fun ImageView.setIconAsteroid(item: Asteroid?){
@@ -15,6 +14,17 @@ fun ImageView.setIconAsteroid(item: Asteroid?){
         if (item?.isPotentiallyHazardous == true) R.drawable.ic_status_potentially_hazardous
         else R.drawable.ic_status_normal
     )
+}
+
+@BindingAdapter("picasso")
+fun ImageView.picasso(url: String?){
+    url?.let {
+        Picasso.with(this.context)
+            .load(url)
+            .placeholder(R.drawable.placeholder_picture_of_day)
+            .centerCrop()
+            .into(this)
+    }
 }
 
 @BindingAdapter("showProgressBar")
