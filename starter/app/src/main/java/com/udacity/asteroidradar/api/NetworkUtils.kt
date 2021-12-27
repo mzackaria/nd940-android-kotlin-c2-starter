@@ -1,6 +1,5 @@
 package com.udacity.asteroidradar.api
 
-import android.util.Log
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.Constants.API_KEY
@@ -72,7 +71,7 @@ suspend fun getAsteroids() : ArrayList<Asteroid> {
     val endDate = dateFormat.format(endTime)
 
     try {
-        val response: ResponseBody = NasaApi.retrofitService.getAsteroids(startDate, endDate, API_KEY)
+        val response: ResponseBody = NasaApi.retrofitService.getAsteroids(startDate, endDate, API_KEY).await()
         val jsonObject = JSONObject(response.string())
         return parseAsteroidsJsonResult(jsonObject)
     } catch (e: Exception) {

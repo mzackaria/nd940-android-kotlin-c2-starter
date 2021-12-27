@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.udacity.asteroidradar.api.ApiStatus
+import com.udacity.asteroidradar.main.MainViewModel
 
 @BindingAdapter("iconAsteroid")
 fun ImageView.setIconAsteroid(item: Asteroid?){
@@ -17,15 +18,17 @@ fun ImageView.setIconAsteroid(item: Asteroid?){
 }
 
 @BindingAdapter("showProgressBar")
-fun ProgressBar.showProgressBar(status: ApiStatus?){
-    this.visibility = if (status == ApiStatus.DONE || status == ApiStatus.ERROR) GONE
-    else VISIBLE
+fun ProgressBar.showProgressBar(isLoadingAndEmpty: Boolean?){
+    isLoadingAndEmpty?.let {
+        this.visibility = if (isLoadingAndEmpty) VISIBLE else GONE
+    }
 }
 
 @BindingAdapter("showBrokenConnection")
-fun ImageView.showBrokenConnection(status: ApiStatus?){
-    this.visibility = if (status == ApiStatus.ERROR) VISIBLE
-    else GONE
+fun ImageView.showBrokenConnection(isErrorAndEmpty: Boolean?){
+    isErrorAndEmpty?.let {
+        this.visibility = if (isErrorAndEmpty) VISIBLE  else GONE
+    }
 }
 
 @BindingAdapter("asteroidStatusImage")

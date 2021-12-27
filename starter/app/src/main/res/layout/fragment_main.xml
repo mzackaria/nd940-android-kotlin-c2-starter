@@ -65,7 +65,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showProgressBar="@{viewModel.status}"/>
+            app:showProgressBar="@{viewModel.isLoadingAndEmpty}"/>
 
         <ImageView
             android:layout_width="36dp"
@@ -76,7 +76,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showBrokenConnection="@{viewModel.status}"/>
+            app:showBrokenConnection="@{viewModel.isErrorAndEmpty}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
