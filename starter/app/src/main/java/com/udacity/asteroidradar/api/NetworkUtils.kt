@@ -71,8 +71,8 @@ suspend fun getAsteroids() : ArrayList<Asteroid> {
     val endDate = dateFormat.format(endTime)
 
     try {
-        val response: ResponseBody = NasaApi.retrofitService.getAsteroids(startDate, endDate, API_KEY).await()
-        val jsonObject = JSONObject(response.string())
+        val response: String = NasaApi.retrofitService.getAsteroids(startDate, endDate, API_KEY).await()
+        val jsonObject = JSONObject(response)
         return parseAsteroidsJsonResult(jsonObject)
     } catch (e: Exception) {
         throw e

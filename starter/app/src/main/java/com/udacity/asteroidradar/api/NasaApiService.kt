@@ -5,6 +5,7 @@ import com.udacity.asteroidradar.Constants.BASE_URL
 import kotlinx.coroutines.Deferred
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -17,6 +18,7 @@ import retrofit2.http.Query
 private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .addCallAdapterFactory(CoroutineCallAdapterFactory())
+    .addConverterFactory(ScalarsConverterFactory.create())
     .build()
 
 interface NasaApiService {
@@ -26,7 +28,7 @@ interface NasaApiService {
         @Query("start_date") startDate: String,
         @Query("end_date") endDate: String,
         @Query("api_key") apiKey: String
-    ): Deferred<ResponseBody>
+    ): Deferred<String>
 }
 
 object NasaApi {

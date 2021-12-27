@@ -16,7 +16,6 @@ import androidx.lifecycle.Observer
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-
     private val database = getDatabase(application)
     private val asteroidRepository = AsteroidRepository(database)
 
