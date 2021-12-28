@@ -1,20 +1,14 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.api.ApiStatus
+import com.udacity.asteroidradar.api.NasaApi
 import com.udacity.asteroidradar.database.getDatabase
 import com.udacity.asteroidradar.repository.AsteroidRepository
-import kotlinx.coroutines.launch
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
-import com.udacity.asteroidradar.api.NasaApi
 import com.udacity.asteroidradar.util.Constants
+import kotlinx.coroutines.launch
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {

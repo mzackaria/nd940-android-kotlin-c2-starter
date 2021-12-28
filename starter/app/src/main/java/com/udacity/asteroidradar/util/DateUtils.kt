@@ -2,7 +2,8 @@ package com.udacity.asteroidradar.util
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
+import java.util.Calendar
 import kotlin.collections.ArrayList
 
 @SuppressLint("ConstantLocale")
