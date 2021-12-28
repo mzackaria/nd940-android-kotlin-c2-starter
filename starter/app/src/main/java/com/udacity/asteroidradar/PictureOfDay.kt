@@ -6,7 +6,7 @@ import com.squareup.moshi.ToJson
 
 data class PictureOfDay(@Json(name = "media_type") val mediaType: MediaType, val title: String,
                         val url: String) {
-    fun isImage() : Boolean = mediaType == MediaType.IMAGE
+    val isImage : Boolean = mediaType == MediaType.IMAGE
 }
 
 enum class MediaType {VIDEO, IMAGE, UNKNOWN}

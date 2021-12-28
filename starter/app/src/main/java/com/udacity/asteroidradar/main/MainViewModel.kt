@@ -48,7 +48,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private suspend fun getImageOfDay() {
         try {
             val pictureOfDay = NasaApi.retrofitService.getImageOfDay(Constants.API_KEY).await()
-            _urlPictureOfDay.value = if(pictureOfDay.isImage()) pictureOfDay.url else null
+            _urlPictureOfDay.value = if(pictureOfDay.isImage) pictureOfDay.url else null
             _titlePictureOfDay.value = pictureOfDay.title
         } catch (e: Exception) {
             e.printStackTrace()

@@ -22,11 +22,18 @@ fun getNextSevenDaysFormattedDates(): ArrayList<String> {
     return formattedDateList
 }
 
+/**
+ * get the today date in format "yyyy-MM-dd"
+ */
 fun getTodayDateFormatted() : String {
     val calendar = Calendar.getInstance()
     return dateFormat.format(calendar.time)
 }
 
+
+/**
+ * get the last used day for the api query field "end_date" in format "yyyy-MM-dd"
+ */
 fun getLastDateFormatted() : String {
     val calendar = Calendar.getInstance()
     calendar.add(Calendar.DAY_OF_YEAR, Constants.DEFAULT_END_DATE_DAYS)

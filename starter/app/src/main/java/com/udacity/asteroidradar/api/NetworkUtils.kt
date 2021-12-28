@@ -45,13 +45,16 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
 
 
 suspend fun getAsteroids() : ArrayList<Asteroid> {
+
     val startDate = getTodayDateFormatted()
     val endDate = getLastDateFormatted()
 
     try {
+
         val response: String = NasaApi.retrofitService.getAsteroids(startDate, endDate, API_KEY).await()
         val jsonObject = JSONObject(response)
         return parseAsteroidsJsonResult(jsonObject)
+
     } catch (e: Exception) {
         throw e
     }

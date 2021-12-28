@@ -13,11 +13,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-
-/**
- * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
- * object.
- */
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .add(MediaTypeAdapter())
