@@ -28,7 +28,8 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:picasso="@{viewModel.urlImageOfDay}"/>
+                app:picasso="@{viewModel.urlPictureofday}"
+                android:contentDescription="@{viewModel.titlePictureOfday}"/>
 
             <TextView
                 android:id="@+id/textView"

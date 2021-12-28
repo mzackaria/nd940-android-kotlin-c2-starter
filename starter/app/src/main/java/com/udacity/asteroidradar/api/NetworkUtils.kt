@@ -1,13 +1,11 @@
 package com.udacity.asteroidradar.api
 
 import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.Constants
-import com.udacity.asteroidradar.Constants.API_KEY
+import com.udacity.asteroidradar.util.Constants.API_KEY
+import com.udacity.asteroidradar.util.getLastDateFormatted
+import com.udacity.asteroidradar.util.getNextSevenDaysFormattedDates
+import com.udacity.asteroidradar.util.getTodayDateFormatted
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
-import kotlin.collections.ArrayList
 
 
 fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
@@ -45,30 +43,10 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
     return asteroidList
 }
 
-private fun getNextSevenDaysFormattedDates(): ArrayList<String> {
-    val formattedDateList = ArrayList<String>()
-
-    val calendar = Calendar.getInstance()
-    for (i in 0..Constants.DEFAULT_END_DATE_DAYS) {
-        val currentTime = calendar.time
-        val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
-        formattedDateList.add(dateFormat.format(currentTime))
-        calendar.add(Calendar.DAY_OF_YEAR, 1)
-    }
-
-    return formattedDateList
-}
 
 suspend fun getAsteroids() : ArrayList<Asteroid> {
-    val calendar = Calendar.getInstance()
-
-    val currentTime = calendar.time
-    calendar.add(Calendar.DAY_OF_YEAR, Constants.DEFAULT_END_DATE_DAYS)
-    val endTime = calendar.time
-
-    val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
-    val startDate = dateFormat.format(currentTime)
-    val endDate = dateFormat.format(endTime)
+    val startDate = getTodayDateFormatted()
+    val endDate = getLastDateFormatted()
 
     try {
         val response: String = NasaApi.retrofitService.getAsteroids(startDate, endDate, API_KEY).await()
@@ -76,18 +54,6 @@ suspend fun getAsteroids() : ArrayList<Asteroid> {
         return parseAsteroidsJsonResult(jsonObject)
     } catch (e: Exception) {
         throw e
-    }
-
-}
-
-suspend fun getImageOfDayUrl() : String? {
-    return try {
-        val response: String = NasaApi.retrofitService.getImageOfDay(API_KEY).await()
-        val jsonObject = JSONObject(response)
-        jsonObject.getString("url")
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
     }
 
 }

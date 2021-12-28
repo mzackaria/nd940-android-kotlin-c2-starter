@@ -1,6 +1,7 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +13,8 @@ import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
-import com.udacity.asteroidradar.api.getImageOfDayUrl
+import com.udacity.asteroidradar.api.NasaApi
+import com.udacity.asteroidradar.util.Constants
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -30,9 +32,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val status: LiveData<ApiStatus>
         get() = _status
 
-    private val _urlImageOfDay = MutableLiveData<String>()
-    val urlImageOfDay : LiveData<String>
-        get() = _urlImageOfDay
+    private val _urlPictureOfDay = MutableLiveData<String>()
+    val urlPictureofday : LiveData<String>
+        get() = _urlPictureOfDay
+
+    private val _titlePictureOfDay = MutableLiveData<String>()
+    val titlePictureOfday : LiveData<String>
+        get() = _titlePictureOfDay
 
     val isLoadingAndEmpty: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>()
     val isErrorAndEmpty: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>()
@@ -46,7 +52,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private suspend fun getImageOfDay() {
-        _urlImageOfDay.value = getImageOfDayUrl()
+        try {
+            val pictureOfDay = NasaApi.retrofitService.getImageOfDay(Constants.API_KEY).await()
+            _urlPictureOfDay.value = if(pictureOfDay.isImage()) pictureOfDay.url else null
+            _titlePictureOfDay.value = pictureOfDay.title
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun setObserversForMediators() {
