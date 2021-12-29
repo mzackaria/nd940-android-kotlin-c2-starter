@@ -16,6 +16,9 @@ fun ImageView.setIconAsteroid(item: Asteroid?){
         if (item?.isPotentiallyHazardous == true) R.drawable.ic_status_potentially_hazardous
         else R.drawable.ic_status_normal
     )
+    this.contentDescription =
+        if (item?.isPotentiallyHazardous == true) this.context.getString(R.string.potentially_hazardous_asteroid_icon)
+        else this.context.getString(R.string.potentially_hazardous_asteroid_icon)
 }
 
 @BindingAdapter("picasso")
